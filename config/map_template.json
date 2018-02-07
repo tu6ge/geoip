@@ -1,0 +1,26 @@
+{
+	"template": "geoip-*",
+	"settings": {
+		"index.number_of_shards": 5,
+		"number_of_replicas": 1
+	},
+	"mappings": {
+		"_default_": {
+			"_all" :{"enabled" : true},
+			"properties": {
+				"geoip": {
+					"type": "geo_point",
+					"index": "not_analyzed"
+				},
+				  "ip1": {
+					"type": "ip",
+					"index": "not_analyzed"
+				},
+				  "ip2": {
+					"type": "ip",
+					"index": "not_analyzed"
+				}
+			}
+		}
+	}
+}

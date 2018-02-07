@@ -1,0 +1,26 @@
+version: "2"
+services:
+        elastic:
+                #image: elasticsearch:5.6.4
+                build: ./elastic
+                ports:
+                        - "19200:9200"
+                        - "19300:9300"
+                volumes:
+                        - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+                        - ./elastData/:/usr/share/elasticsearch/data
+                restart: always
+        logstash:
+                build: ./logstash
+                #ports:
+                #        - "5601:5601"
+                depends_on:
+                        - elastic
+                links:
+                        - elastic:elastic
+                external_links:
+                        - ipdata_mysql_1:mysql
+                restart: always
+                volumes:
+                        - ./config:/home/config
+                command: -f /home/config/region.conf
